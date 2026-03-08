@@ -34,7 +34,6 @@ wheels = [
 
 [[package]]
 name = "i2psam"
-version = "1.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "pydantic" },
