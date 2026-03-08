@@ -79,7 +79,11 @@ class Connection:
         **kw,
     ):
         msg = commands.SessionCreate(
-            ID=session_id, DESTINATION=destination, STYLE=style, **kw
+            ID=session_id,
+            DESTINATION=destination,
+            STYLE=style,
+            SIGNATURE_TYPE=kw.get("SIGNATURE_TYPE", self.cfg.signature_type),
+            **kw,
         )
 
         response = await self.request(msg)
@@ -90,10 +94,22 @@ class Connection:
         return Session(self.client, self, session_id, response.destination)
 
     async def dest_generate(self, **kw):
-        return await self.request(commands.DestGenerate(**kw))
+        return await self.request(
+            commands.DestGenerate(
+                SIGNATURE_TYPE=kw.get("SIGNATURE_TYPE", self.cfg.signature_type)
+            )
+        )
 
     async def handshake(self, **kw):
-        return await self.request(commands.HelloVersion(**kw))
+        return await self.request(
+            commands.HelloVersion(
+                MIN=kw.get("MIN", self.cfg.min_version),
+                MAX=kw.get("MAX", self.cfg.max_version),
+                USER=kw.get("USER", self.cfg.user),
+                PASSWORD=kw.get("PASSWORD", self.cfg.password),
+                **kw,
+            )
+        )
 
     async def naming_lookup(self, name: str, **kw):
         return await self.request(commands.NamingLookup(NAME=name, **kw))

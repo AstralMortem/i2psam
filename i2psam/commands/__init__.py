@@ -9,6 +9,8 @@ from .commands import (
     StreamStatus,
     DestGenerate,
     DestReply,
+    NamingLookup,
+    NamingReply,
 )
 
 __all__ = (
@@ -22,4 +24,6 @@ __all__ = (
     "StreamStatus",
     "DestGenerate",
     "DestReply",
+    "NamingLookup",
+    "NamingReply",
 )
